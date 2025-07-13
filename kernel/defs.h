@@ -8,6 +8,7 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
+struct thread;
 
 // bio.c
 void            binit(void);
@@ -184,6 +185,14 @@ void            plic_complete(int);
 void            virtio_disk_init(void);
 void            virtio_disk_rw(struct buf *, int);
 void            virtio_disk_intr(void);
+
+
+void exitthread();
+void freethread(struct thread *t);
+struct thread* allocthread(uint64 start_thread, uint64 stack_address,
+uint64 arg);
+int jointhread(uint id);
+void sleepthread(int n, uint ticks0);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))
